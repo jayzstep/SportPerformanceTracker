@@ -6,3 +6,4 @@ A web app designed to explore the impact of menstrual cycles on athletic perform
     - This is a small scale "proof of concept" -type version. Making the addition of new survey dimensions straightforward is key for enhanced future research and insights.
 2. Secure login protocols.
 3. PostgreSQL database.
+    - Current model, will be updated regularly: https://dbdiagram.io/d/SportPerformanceTracker-654672757d8bbd64657c1421
