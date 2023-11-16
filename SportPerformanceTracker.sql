@@ -1,5 +1,5 @@
 CREATE TABLE Data (
-  entry_id integer PRIMARY KEY,
+  entry_id serial PRIMARY KEY,
   user_id integer,
   question_id integer,
   response integer,
