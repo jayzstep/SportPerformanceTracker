@@ -7,9 +7,9 @@ CREATE TABLE Data (
 );
 
 CREATE TABLE Users (
-  id integer PRIMARY KEY,
-  email varchar(255) UNIQUE,
-  pw_hash char(60),
+  id serial PRIMARY KEY,
+  username varchar(255) UNIQUE,
+  password varchar(128),
   admin boolean,
   created_at timestamp DEFAULT CURRENT_TIMESTAMP,
   full_name varchar,

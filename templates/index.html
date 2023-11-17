@@ -1,16 +1,13 @@
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<p>Tervetuloa <i>sovellukseen</i></p>
-<hr />
-<form action="/result" method="POST">
-  {% for question in questions %}
-  <p>{{ question.question_text }}</p>
-  <input type="radio" name="{{ question.question_id }}" value="1" />1
-  <input type="radio" name="{{ question.question_id }}" value="2" />2
-  <input type="radio" name="{{ question.question_id }}" value="3" />3
-  <input type="radio" name="{{ question.question_id }}" value="4" />4
-  <input type="radio" name="{{ question.question_id }}" value="5" />5 {%endfor%}
-  <input type="submit" value="Submit" />
+{% if session.username %}
+<p>You are logged in as {{session.username}}</p>
+<a href="/logout">Logout</a>
+{% else %}
+<form action="/login" method="POST">
+  <p>Username</p>
+  <input type="text" name="username" />
+  <p>Password</p>
+  <input type="password" name="password" />
+  <input type="submit" value="Login" />
+  <a href="/register">Register</a>
 </form>
-
-<hr />
+{% endif %}
