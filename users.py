@@ -14,11 +14,13 @@ def login(username, password):
     user = result.fetchone()
     if not user:
         return False
-    if not bcrypt.checkpw(password.encode(), user[0].encode()):
+    stored_password = user[0]
+    if not stored_password:
         return False
+    if not bcrypt.checkpw(password.encode(), stored_password.encode()):
+        return False
+
     session["username"] = username
-    session[user_id] = user.id
-    session[admin] = user.admin
     session["csrf_token"] = os.urandom(16).hex()
     return True
 
@@ -27,6 +29,7 @@ def logout():
     del session["username"]
     del session["user_id"]
     del session["admin"]
+    del session["csrf_token"]
 
 
 def add_new_user(username, password, role):
@@ -37,7 +40,7 @@ def add_new_user(username, password, role):
             text(
                 "INSERT INTO users (username, password, admin) VALUES (:username, :password, :admin)"
             ),
-            {"username": username, "password": hash_value, "admin": role},
+            {"username": username, "password": hash_value.decode(), "admin": role},
         )
 
         db.session.commit()
@@ -45,4 +48,4 @@ def add_new_user(username, password, role):
     except Exception as e:
         print(f"An error occurred: {e}")
         return False
-    return login(username, password)
+    return  # login(username, password)

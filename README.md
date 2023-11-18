@@ -22,5 +22,5 @@ Ensure that you have PostgreSQL installed and running on your system.
 Run the following command:
 
 ```bash
-psql -U <your_username> -d <your_database_name> -f SportPerformanceTracker.sql
+psql -U <your_username> -d <your_database_name> -f schema.sql
 ```
