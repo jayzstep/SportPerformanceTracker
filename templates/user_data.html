@@ -1,0 +1,22 @@
+<h1>User Data</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th>Response</th>
+                <th>Datetime</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in user_data %}
+            <tr>
+                <td>{{ data.question_text }}</td>
+                <td>{{ data.response }}</td>
+                <td>{{ data.created_at}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/">Back</a>
+</body>
+</html>

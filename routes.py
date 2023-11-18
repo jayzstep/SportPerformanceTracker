@@ -4,11 +4,24 @@ from flask import render_template, request, redirect, session
 from sqlalchemy import text
 from flask import request
 import users
+import db_queries
 
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+@app.route("/user_data")
+def user_data():
+    if "user_id" in session:
+        user_data = db_queries.get_all_data(session["user_id"])
+        if user_data:
+            return render_template("user_data.html", user_data=user_data)
+        else:
+            return "No data found for this user", 404
+    else:
+        return "Unauthorized", 403
 
 
 @app.route("/poll")
