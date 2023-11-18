@@ -1,6 +1,6 @@
-<title>Etusivu</title>
-<h1>Etusivu</h1>
-<p>Tervetuloa <i>sovellukseen</i></p>
+<title>Poll</title>
+<h1>Poll</h1>
+<p>Welcome to the poll</p>
 <hr />
 <form action="/result" method="POST">
   {% for question in questions %}
@@ -11,6 +11,7 @@
   <input type="radio" name="{{ question.question_id }}" value="4" />4
   <input type="radio" name="{{ question.question_id }}" value="5" />5 {%endfor%}
   <input type="submit" value="Submit" />
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
 
 <hr />

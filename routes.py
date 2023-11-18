@@ -20,20 +20,27 @@ def home():
 
 @app.route("/result", methods=["POST"])
 def result():
-    for question_id in request.form:
-        response_value = request.form[question_id]
+    users.check_csrf()
+
+    form_data = {k: v for k, v in request.form.items() if k != "csrf_token"}
+
+    for question_id, response_value in form_data.items():
         print(f"Question ID: {question_id}, Response Value: {response_value}")
 
         db.session.execute(
             text(
-                "INSERT INTO Data (question_id, response) VALUES (:question_id, :response)"
+                "INSERT INTO Data (question_id, user_id, response) VALUES (:question_id, :user_id, :response)"
             ),
-            {"question_id": question_id, "response": response_value},
+            {
+                "question_id": question_id,
+                "user_id": session["user_id"],
+                "response": response_value,
+            },
         )
 
     db.session.commit()
-
-    return "Answers saved successfully!"
+    print("Answers saved successfully!")
+    return redirect("/")
 
 
 @app.route("/login", methods=["POST"])
@@ -46,9 +53,9 @@ def login():
     return redirect("/")
 
 
-@app.route("/logout", methods=["POST"])
+@app.route("/logout")
 def logout():
-    logout()
+    users.logout()
     return redirect("/")
 
 

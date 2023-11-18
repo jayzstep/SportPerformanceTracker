@@ -1,6 +1,7 @@
 {% if session.username %}
 <p>You are logged in as {{session.username}}</p>
 <a href="/logout">Logout</a>
+<a href="/poll">Poll</a>
 {% else %}
 <form action="/login" method="POST">
   <p>Username</p>
