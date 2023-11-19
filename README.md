@@ -5,6 +5,8 @@ This is a small scale "proof of concept" -type version. Making the addition of n
 
 # For the peer reviewer 18.11.2023
 
+[Try it out](https://sportperformancetracker.fly.dev)
+
 I've been focusing primarily on setting up the initial configuration. As it stands, you can perform tasks like create a user, log in and out, input data, and view your personal data in a table format. However, this version is far from final.
 
 In the upcoming iterations, the aim is to implement a dashboard and replace tables with graphical representations for better data visualization. The current survey questions are basic; the plan is to explore more sophisticated responses, possibly transitioning from the simple 1-5 radio buttons to incorporate text fields and checkboxes. As the latter brings complexity, there's a consideration to maintain simplicity by sticking mostly with radio buttons for now.

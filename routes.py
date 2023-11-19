@@ -25,7 +25,7 @@ def user_data():
 
 
 @app.route("/poll")
-def home():
+def poll():
     result = db.session.execute(text("SELECT * FROM questions"))
     questions = result.fetchall()
     return render_template("poll.html", questions=questions)

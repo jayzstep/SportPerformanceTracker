@@ -2,7 +2,7 @@ from db import db
 from sqlalchemy import text
 
 
-# for testing
+# just for testing
 def get_motivation(user_id):
     sql = (
         "SELECT response, created_at FROM data WHERE question_id=1 AND user_id=:user_id"
