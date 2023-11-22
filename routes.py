@@ -7,6 +7,11 @@ import users
 import db_queries
 
 
+@app.route("/testi")
+def testi():
+    return render_template("testi.html")
+
+
 @app.route("/")
 def index():
     return render_template("index.html")

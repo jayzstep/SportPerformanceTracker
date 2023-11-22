@@ -1,11 +1,3 @@
-CREATE TABLE Data (
-  entry_id serial PRIMARY KEY,
-  user_id integer,
-  question_id integer,
-  response integer,
-  created_at timestamp DEFAULT CURRENT_TIMESTAMP
-);
-
 CREATE TABLE Users (
   id serial PRIMARY KEY,
   username varchar(255) UNIQUE,
@@ -22,21 +14,42 @@ CREATE TABLE Users (
 CREATE TABLE Questions (
   question_id serial PRIMARY KEY,
   question_text text,
-  question_type varchar
+  question_type varchar,
+  radio_low text,
+  radio_high text,
+  radio_scale integer
+);
+
+CREATE TABLE Data (
+  entry_id serial PRIMARY KEY,
+  user_id integer REFERENCES Users (id),
+  question_id integer REFERENCES Questions (question_id),
+  response integer,
+  created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
 
-ALTER TABLE Data ADD FOREIGN KEY (user_id) REFERENCES Users (id);
-ALTER TABLE Data ADD FOREIGN KEY (question_id) REFERENCES Questions (question_id);
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your motivation level today?', 'radio', 'Low', 'High', 5);
 
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your physical fatigue today?', 'radio', 'Low', 'High', 5);
 
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your muscle soreness today?', 'radio', 'Low', 'High', 5);
 
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your sleep quality today?', 'radio', 'Bad', 'Good', 5);
 
-INSERT INTO questions (question_text) VALUES ('How would you rate your motivation level yesterday?');
-INSERT INTO questions (question_text) VALUES ('How would you rate your physical fatigue yesterday?');
-INSERT INTO questions (question_text) VALUES ('How would you rate your muscle soreness yesterday?');
-INSERT INTO questions (question_text) VALUES ('How would you rate your sleep quality yesterday?');
-INSERT INTO questions (question_text) VALUES ('How would you rate your stress level yesterday?');
-INSERT INTO questions (question_text) VALUES ('How would you rate your diet quality yesterday?');
-INSERT INTO questions (question_text) VALUES ('How would you rate your performance in yesterdays training or game?');
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your stress level today?', 'radio', 'Low', 'High', 5);
+
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your diet quality today?', 'radio', 'Junk', 'Great', 5);
+
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('How would you rate your performance in todays training or game?', 'radio', 'Poor', 'Excellent', 10);
+
+INSERT INTO Questions (question_text, question_type, radio_low, radio_high, radio_scale) 
+VALUES ('Are you injured?', 'radio', 'No', 'Yes', 2);
 

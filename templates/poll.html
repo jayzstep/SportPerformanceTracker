@@ -3,15 +3,18 @@
 <p>Welcome to the poll</p>
 <hr />
 <form action="/result" method="POST">
-  {% for question in questions %}
+  {% for question in questions %} {% if question.question_type == "radio" %}
   <p>{{ question.question_text }}</p>
-  <input type="radio" name="{{ question.question_id }}" value="1" />1
-  <input type="radio" name="{{ question.question_id }}" value="2" />2
-  <input type="radio" name="{{ question.question_id }}" value="3" />3
-  <input type="radio" name="{{ question.question_id }}" value="4" />4
-  <input type="radio" name="{{ question.question_id }}" value="5" />5 {%endfor%}
+  <p>
+    {{ question.radio_low }} {% for i in range(question.radio_scale) %}
+    <input type="radio" name="{{ question.question_id }}" value="{{ i }}" />{{ i
+    }} {% endfor %} {{ question.radio_high }}
+  </p>
+  {% elif question.question_type == "text" %}
+  <p>{{ question.question_text }}</p>
+  <input type="text" name="{{ question.question_id }}" />
+  {% endif %} {% endfor %}
   <input type="submit" value="Submit" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
-
 <hr />
