@@ -81,6 +81,9 @@ def logout():
 def new_user():
     username = request.form["username"]
     password = request.form["password"]
+    password2 = request.form["confirm_password"]
+    if password != password2:
+        return render_template("error.html", message="Passwords do not match")
     users.add_new_user(username, password, False)
     return redirect("/")
 
