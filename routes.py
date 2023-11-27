@@ -4,12 +4,18 @@ from flask import render_template, request, redirect, session
 from sqlalchemy import text
 from flask import request
 import users
-import db_queries
+import poll_helper
 
 
 @app.route("/testi")
 def testi():
-    return render_template("testi.html")
+    if "user_id" not in session:
+        return redirect("/")
+    labels, values = poll_helper.get_motivation(session["user_id"])
+    if user_data:
+        return render_template("testi.html", labels=labels, values=values)
+    else:
+        return "No data found for this user", 404
 
 
 @app.route("/")
@@ -19,20 +25,20 @@ def index():
 
 @app.route("/user_data")
 def user_data():
-    if "user_id" in session:
-        user_data = db_queries.get_all_data(session["user_id"])
-        if user_data:
-            return render_template("user_data.html", user_data=user_data)
-        else:
-            return "No data found for this user", 404
+    if "user_id" not in session:
+        return redirect("/")
+    user_data = poll_helper.get_all_data(session["user_id"])
+    if user_data:
+        return render_template("user_data.html", user_data=user_data)
     else:
-        return "Unauthorized", 403
+        return "No data found for this user", 404
 
 
 @app.route("/poll")
 def poll():
-    result = db.session.execute(text("SELECT * FROM questions"))
-    questions = result.fetchall()
+    if "user_id" not in session:
+        return redirect("/")
+    questions = poll_helper.get_poll()
     return render_template("poll.html", questions=questions)
 
 
@@ -43,21 +49,7 @@ def result():
     form_data = {k: v for k, v in request.form.items() if k != "csrf_token"}
 
     for question_id, response_value in form_data.items():
-        print(f"Question ID: {question_id}, Response Value: {response_value}")
-
-        db.session.execute(
-            text(
-                "INSERT INTO Data (question_id, user_id, response) VALUES (:question_id, :user_id, :response)"
-            ),
-            {
-                "question_id": question_id,
-                "user_id": session["user_id"],
-                "response": response_value,
-            },
-        )
-
-    db.session.commit()
-    print("Answers saved successfully!")
+        poll_helper.add_data(question_id, session["user_id"], response_value)
     return redirect("/")
 
 

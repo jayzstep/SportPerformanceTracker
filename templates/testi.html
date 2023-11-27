@@ -1,31 +1,56 @@
-<h1>Testi</h1>
-<div>
-  <canvas id="myChart"></canvas>
-</div>
+<h1>TESTISIVU</h1>
+    <!-- <table>
+        <thead>
+            <tr>
+                <th>Labels</th>
+                <th>Values</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for data in user_data %}
+            <tr>
+                <td>{{ data[0] }}</td>
+                <td>{{ data[1] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> -->
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <div>
+        <canvas id="myChart"></canvas>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+      <script>
+        const ctx = document.getElementById("myChart");
+        
 
-<script>
-  const ctx = document.getElementById("myChart");
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: {{ labels|tojson|safe }},
+            datasets: [
+              {
+                label: "# of Votes",
+                data: {{ values|tojson|safe }},
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                suggestedMax: 4,
+                stepSize: 1
+              },
+            },
+          },
+        });
+      </script>
 
-  new Chart(ctx, {
-    type: "bar",
-    data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-</script>
+
+    <a href="/">Back</a>
+</body>
+</html>
