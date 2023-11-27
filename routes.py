@@ -23,15 +23,19 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/user_data")
+@app.route("/user_data", methods=["POST", "GET"])
 def user_data():
     if "user_id" not in session:
         return redirect("/")
-    user_data = poll_helper.get_all_data(session["user_id"])
-    if user_data:
-        return render_template("user_data.html", user_data=user_data)
-    else:
-        return "No data found for this user", 404
+
+    labels, values = [], []
+    if request.method == "POST":
+        question_id = request.form["question_id"]
+        labels, values = poll_helper.get_single_data(question_id, session["user_id"])
+        if not labels and not values:
+            return "No data found", 404
+
+    return render_template("user_data.html", labels=labels, values=values)
 
 
 @app.route("/poll")

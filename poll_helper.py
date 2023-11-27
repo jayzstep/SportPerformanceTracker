@@ -8,11 +8,11 @@ def get_poll():
 
 
 # just for testing
-def get_motivation(user_id):
-    sql = (
-        "SELECT response, created_at FROM data WHERE question_id=1 AND user_id=:user_id"
-    )
-    data = db.session.execute(text(sql), {"user_id": user_id}).fetchall()
+def get_single_data(question_id, user_id):
+    sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id"
+    data = db.session.execute(
+        text(sql), {"question_id": question_id, "user_id": user_id}
+    ).fetchall()
     labels = [row[1].strftime("%Y-%m-%d") for row in data]
     values = [row[0] for row in data]
     print("labels:", labels)
