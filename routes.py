@@ -9,6 +9,8 @@ import poll_helper
 
 @app.route("/")
 def index():
+    if "user_id" not in session:
+        return redirect("/login")
     return render_template("index.html")
 
 
@@ -46,14 +48,16 @@ def result():
     return redirect("/")
 
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["POST", "GET"])
 def login():
-    username = request.form["username"]
-    password = request.form["password"]
-    if not users.login(username, password):
-        return render_template("error.html", message="Wrong credentials")
-    session["username"] = username
-    return redirect("/")
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        if not users.login(username, password):
+            return render_template("error.html", message="Wrong credentials")
+        session["username"] = username
+        return redirect("/")
+    return render_template("login.html")
 
 
 @app.route("/logout")

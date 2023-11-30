@@ -6,6 +6,7 @@
   SportPerformanceTracker</h1>
   <hr />
   {% if 'user_id' in session %}
+  <p>You are logged in as {{session.username}}</p>
       <strong><nav>
         <ul class="menu">
           <li><a href="{{ url_for('poll') }}">Poll</a></li>
