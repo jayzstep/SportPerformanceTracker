@@ -7,7 +7,6 @@ def get_poll():
     return db.session.execute(text(sql)).fetchall()
 
 
-# just for testing
 def get_single_data(question_id, user_id):
     sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id"
     data = db.session.execute(
@@ -38,5 +37,4 @@ def add_data(question_id, user_id, response):
         },
     )
     db.session.commit()
-    print("Answers saved successfully!")
     return
