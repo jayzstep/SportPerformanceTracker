@@ -1,3 +1,4 @@
+{% extends "layout.html" %} {% block content %}
 <h1>New user</h1>
 <form action="/new_user" method="POST">
   <label for="username">Username (Email):</label>
@@ -25,3 +26,4 @@
 
   <button type="submit">Register</button>
 </form>
+{% endblock %}

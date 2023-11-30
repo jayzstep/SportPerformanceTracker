@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="/static/main.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SportPerformanceTracker</title>
+<h1>
+  SportPerformanceTracker</h1>
+  <hr />
+  {% if 'user_id' in session %}
+      <strong><nav>
+        <ul class="menu">
+          <li><a href="{{ url_for('poll') }}">Poll</a></li>
+          <li><a href="{{ url_for('user_data') }}">User Data</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        </ul>
+      </nav></strong>
+  {% endif %}
+  {% block content %}{% endblock %}
+</h1>

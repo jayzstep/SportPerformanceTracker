@@ -7,17 +7,6 @@ import users
 import poll_helper
 
 
-@app.route("/testi")
-def testi():
-    if "user_id" not in session:
-        return redirect("/")
-    labels, values = poll_helper.get_motivation(session["user_id"])
-    if user_data:
-        return render_template("testi.html", labels=labels, values=values)
-    else:
-        return "No data found for this user", 404
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
