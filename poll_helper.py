@@ -19,6 +19,16 @@ def get_single_data(question_id, user_id):
     return labels, values
 
 
+def get_question_title(question_id):
+    sql = "SELECT question_title FROM questions WHERE question_id=:question_id"
+    return db.session.execute(text(sql), {"question_id": question_id}).fetchone()[0]
+
+
+def get_questions_for_menu():
+    sql = "SELECT question_id, question_title FROM questions WHERE radio_scale = 5"
+    return db.session.execute(text(sql)).fetchall()
+
+
 def get_all_data(user_id):
     sql = """SELECT questions.question_text, data.response, data.created_at 
         FROM questions JOIN data ON questions.question_id=data.question_id WHERE data.user_id = :user_id;"""
