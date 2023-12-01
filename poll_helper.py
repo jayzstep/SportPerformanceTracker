@@ -24,8 +24,13 @@ def get_question_title(question_id):
     return db.session.execute(text(sql), {"question_id": question_id}).fetchone()[0]
 
 
+def get_radio_scale(question_id):
+    sql = "SELECT radio_scale FROM questions WHERE question_id=:question_id"
+    return db.session.execute(text(sql), {"question_id": question_id}).fetchone()[0]
+
+
 def get_questions_for_menu():
-    sql = "SELECT question_id, question_title FROM questions WHERE radio_scale = 5"
+    sql = "SELECT question_id, question_title, radio_scale FROM questions WHERE radio_scale >= 5"
     return db.session.execute(text(sql)).fetchall()
 
 

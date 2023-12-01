@@ -8,8 +8,11 @@
   <p>{{ question.question_text }}</p>
   <p>
     {{ question.radio_low }} {% for i in range(question.radio_scale) %}
-    <input type="radio" name="{{ question.question_id }}" value="{{ i }}" />{{ i
-    }} {% endfor %} {{ question.radio_high }}
+    <input
+      type="radio"
+      name="{{ question.question_id }}"
+      value="{{ i + 1 }}"
+    />{{ i + 1 }} {% endfor %} {{ question.radio_high }}
   </p>
   {% elif question.question_type == "text" %}
   <p>{{ question.question_text }}</p>

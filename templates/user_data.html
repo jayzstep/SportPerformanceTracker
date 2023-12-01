@@ -22,7 +22,6 @@
 
 <script>
   const ctx = document.getElementById("myChart");
-  
 
   new Chart(ctx, {
     type: "line",
@@ -39,8 +38,8 @@
     options: {
       scales: {
         y: {
-          beginAtZero: true,
-          suggestedMax: 4,
+          suggestedMax: {{radio_scale|safe}},
+          suggestedMin: 1,
           ticks: {
             stepSize: 1,
             precision: 0

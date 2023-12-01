@@ -26,12 +26,17 @@ def user_data():
         question_id = request.form["question_id"]
         labels, values = poll_helper.get_single_data(question_id, session["user_id"])
         title = poll_helper.get_question_title(question_id)
-
+        radio_scale = poll_helper.get_radio_scale(question_id)
         if not labels and not values:
             return "No data found", 404
 
     return render_template(
-        "user_data.html", labels=labels, values=values, title=title, questions=questions
+        "user_data.html",
+        labels=labels,
+        values=values,
+        title=title,
+        questions=questions,
+        radio_scale=radio_scale,
     )
 
 
