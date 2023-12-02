@@ -2,37 +2,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
-<h1>User Data</h1>
-<p>Choose a question to see the results</p>
-<form action="/user_data" method="POST">
-  <select name="question_id">
-  {% for question in questions %}
-    <option value="{{ question.question_id }}">{{ question.question_title }}</option>
-  {% endfor %}
-  </select>
-  <input type="submit" value="Show" />
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-</form>
-<hr />
-  
-{% if chart_data %}
-<h2>{{ title }}</h2>
+<h1>testisivu</h1>
 <div>
-  <canvas id="myChart"></canvas>
+  <canvas id="myChart" height="90"></canvas>
 </div>
-
 <script>
   console.log({{ chart_data|safe }})
-  const ctx = document.getElementById("myChart");
 
-  new Chart(ctx, {
+  new Chart("myChart", {
     type: "line",
     data: {
       datasets: [
         {
-          label: "Data",
+          label: "Testidata",
           data: {{ chart_data|safe }},
-          borderWidth: 1,
           borderColor: "rgb(0, 0, 255)",
           backgroundColor: "rgba(0, 0, 255, 0.5)",
         },
@@ -45,11 +28,8 @@
       },
       scales: {
         y: {
-          suggestedMax: {{radio_scale|safe}},
-          suggestedMin: 1,
           ticks: {
             stepSize: 1,
-            precision: 0
           },
         },
         x: {
@@ -64,10 +44,4 @@
     },
   });
 </script>
-
-{% endif %}
-
-<a href="/">Back</a>
-</body>
-</html>
 {% endblock %}

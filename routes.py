@@ -7,6 +7,19 @@ import users
 import poll_helper
 
 
+@app.route("/testi")
+def testi():
+    chart_data = poll_helper.get_test_data(1, session["user_id"])
+    test_chart_data = [
+        {"date": "2020-01-01", "value": 1},
+        {"date": "2020-01-02", "value": 2},
+        {"date": "2020-01-03", "value": 5},
+        {"date": "2020-01-05", "value": 7},
+        {"date": "2020-01-11", "value": 6},
+    ]
+    return render_template("testi.html", chart_data=test_chart_data)
+
+
 @app.route("/")
 def index():
     if "user_id" not in session:
@@ -19,21 +32,21 @@ def user_data():
     if "user_id" not in session:
         return redirect("/")
 
-    labels, values = [], []
+    labels = []
     title = ""
+    radio_scale = 1
     questions = poll_helper.get_questions_for_menu()
     if request.method == "POST":
         question_id = request.form["question_id"]
-        labels, values = poll_helper.get_single_data(question_id, session["user_id"])
+        chart_data = poll_helper.get_single_data(question_id, session["user_id"])
         title = poll_helper.get_question_title(question_id)
         radio_scale = poll_helper.get_radio_scale(question_id)
-        if not labels and not values:
+        if not chart_data:
             return "No data found", 404
 
     return render_template(
         "user_data.html",
-        labels=labels,
-        values=values,
+        chart_data=chart_data,
         title=title,
         questions=questions,
         radio_scale=radio_scale,
@@ -44,6 +57,10 @@ def user_data():
 def poll():
     if "user_id" not in session:
         return redirect("/")
+    if poll_helper.check_poll_updated(session["user_id"]):
+        return render_template(
+            "/error.html", message="You have already answered the poll today"
+        )
     questions = poll_helper.get_poll()
     return render_template("poll.html", questions=questions)
 

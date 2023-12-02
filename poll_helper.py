@@ -1,5 +1,16 @@
 from db import db
 from sqlalchemy import text
+from datetime import date
+
+
+def get_test_data(question_id, user_id):
+    sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id"
+    data = db.session.execute(
+        text(sql), {"question_id": question_id, "user_id": user_id}
+    ).fetchall()
+    labels = [{"date": row[1].strftime("%Y-%m-%d"), "value": row[0]} for row in data]
+    print("labels:", labels)
+    return labels
 
 
 def get_poll():
@@ -12,11 +23,9 @@ def get_single_data(question_id, user_id):
     data = db.session.execute(
         text(sql), {"question_id": question_id, "user_id": user_id}
     ).fetchall()
-    labels = [row[1].strftime("%Y-%m-%d") for row in data]
-    values = [row[0] for row in data]
+    labels = [{"date": row[1].strftime("%Y-%m-%d"), "value": row[0]} for row in data]
     print("labels:", labels)
-    print("values:", values)
-    return labels, values
+    return labels
 
 
 def get_question_title(question_id):
@@ -51,5 +60,19 @@ def add_data(question_id, user_id, response):
             "response": response,
         },
     )
+    today = date.today()
+    db.session.execute(
+        text("UPDATE users SET poll_updated_at = :today WHERE id = :user_id"),
+        {"today": today, "user_id": user_id},
+    )
     db.session.commit()
     return
+
+
+def check_poll_updated(user_id):
+    sql = "SELECT poll_updated_at FROM users WHERE id=:user_id"
+    date_updated = db.session.execute(text(sql), {"user_id": user_id}).fetchone()[0]
+    if date_updated == date.today():
+        return True
+    else:
+        return False
