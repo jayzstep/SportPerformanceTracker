@@ -3,7 +3,18 @@ from sqlalchemy import text
 from datetime import date
 
 
-def get_test_data(question_id, user_id):
+# poll
+
+
+def get_poll():
+    sql = "SELECT * FROM questions"
+    return db.session.execute(text(sql)).fetchall()
+
+
+# get user data
+
+
+def get_single_data(question_id, user_id):
     sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id"
     data = db.session.execute(
         text(sql), {"question_id": question_id, "user_id": user_id}
@@ -13,16 +24,15 @@ def get_test_data(question_id, user_id):
     return labels
 
 
-def get_poll():
-    sql = "SELECT * FROM questions"
-    return db.session.execute(text(sql)).fetchall()
-
-
-def get_single_data(question_id, user_id):
-    sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id"
-    data = db.session.execute(
-        text(sql), {"question_id": question_id, "user_id": user_id}
-    ).fetchall()
+def get_menstrual_data(user_id):
+    sql = """
+        SELECT data.response, data.created_at
+        FROM data
+        JOIN users ON data.user_id = users.id
+        JOIN questions ON data.question_id = questions.question_id
+        WHERE questions.question_title = 'Menstrual cycle day 1' AND users.id=:user_id;
+    """
+    data = db.session.execute(text(sql), {"user_id": user_id}).fetchall()
     labels = [{"date": row[1].strftime("%Y-%m-%d"), "value": row[0]} for row in data]
     print("labels:", labels)
     return labels
@@ -49,6 +59,9 @@ def get_all_data(user_id):
     return db.session.execute(text(sql), {"user_id": user_id}).fetchall()
 
 
+# add data
+
+
 def add_data(question_id, user_id, response):
     db.session.execute(
         text(
@@ -67,6 +80,9 @@ def add_data(question_id, user_id, response):
     )
     db.session.commit()
     return
+
+
+# checks
 
 
 def check_poll_updated(user_id):

@@ -22,7 +22,6 @@
 </div>
 
 <script>
-  console.log({{ chart_data|safe }})
   const ctx = document.getElementById("myChart");
 
   new Chart(ctx, {
@@ -30,12 +29,19 @@
     data: {
       datasets: [
         {
-          label: "Data",
+          label: "{{ title }}",
           data: {{ chart_data|safe }},
           borderWidth: 1,
           borderColor: "rgb(0, 0, 255)",
           backgroundColor: "rgba(0, 0, 255, 0.5)",
         },
+        {
+          label: "Day 1 of cycle",
+          data: {{ menstrual_data|safe }},
+          borderWidth: 1,
+          borderColor: "rgb(255, 0, 0)",
+          backgroundColor: "rgba(255, 0, 0, 0.5)",
+        }
       ],
     },
     options: {

@@ -32,21 +32,24 @@ def user_data():
     if "user_id" not in session:
         return redirect("/")
 
-    labels = []
     title = ""
     radio_scale = 1
+    chart_data = []
+    menstrual_data = []
     questions = poll_helper.get_questions_for_menu()
     if request.method == "POST":
         question_id = request.form["question_id"]
         chart_data = poll_helper.get_single_data(question_id, session["user_id"])
+        menstrual_data = poll_helper.get_menstrual_data(session["user_id"])
         title = poll_helper.get_question_title(question_id)
         radio_scale = poll_helper.get_radio_scale(question_id)
         if not chart_data:
-            return "No data found", 404
+            return "No data found", 404  #! change to error page?
 
     return render_template(
         "user_data.html",
         chart_data=chart_data,
+        menstrual_data=menstrual_data,
         title=title,
         questions=questions,
         radio_scale=radio_scale,
