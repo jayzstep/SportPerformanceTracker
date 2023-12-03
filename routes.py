@@ -9,11 +9,11 @@ import poll_helper
 
 @app.route("/testi")
 def testi():
-    sleep_average = poll_helper.get_sleep_average(1)
-    # if sleep_average < 5:
-    #     poll_helper.add_usertip(1, 2) #! kannattaa olla ehkä try except
-    tips = poll_helper.get_usertips(1)
-    return render_template("testi.html", sleep_average=sleep_average, tips=tips)
+    if "user_id" not in session:
+        return redirect("/")
+    category_averages = poll_helper.get_category_averages(1)
+    tips = poll_helper.get_all_tips()
+    return render_template("testi.html", averages=category_averages, tips=tips)
 
 
 @app.route("/")

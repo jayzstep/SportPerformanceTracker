@@ -1,7 +1,10 @@
 {% extends "layout.html" %} {% block content %}
-<h1>testisivu</h1>
-<p>Sleep average: {{ sleep_average }}</p>
-
+<h1>Test page</h1>
+<h2>Average score per category</h2>
+{% for category in averages %}
+<p>{{ category[0] }} : {{category[1] }}</p>
+{% endfor %}
+<h2>all mock tips:</h2>
 {% for tip in tips %}
-<p>{{ tip }}</p>
+<p>{{ tip[0] }}</p>
 {% endfor %} {% endblock %}
