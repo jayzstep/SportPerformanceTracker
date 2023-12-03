@@ -12,6 +12,7 @@
       type="radio"
       name="{{ question.question_id }}"
       value="{{ i + 1 }}"
+      required
     />{{ i + 1 }} {% endfor %} {{ question.radio_high }}
   </p>
   {% elif question.question_type == "text" %}

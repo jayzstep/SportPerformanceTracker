@@ -7,19 +7,6 @@ import users
 import poll_helper
 
 
-@app.route("/testi")
-def testi():
-    chart_data = poll_helper.get_test_data(1, session["user_id"])
-    test_chart_data = [
-        {"date": "2020-01-01", "value": 1},
-        {"date": "2020-01-02", "value": 2},
-        {"date": "2020-01-03", "value": 5},
-        {"date": "2020-01-05", "value": 7},
-        {"date": "2020-01-11", "value": 6},
-    ]
-    return render_template("testi.html", chart_data=test_chart_data)
-
-
 @app.route("/")
 def index():
     if "user_id" not in session:

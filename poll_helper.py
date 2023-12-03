@@ -30,7 +30,7 @@ def get_menstrual_data(user_id):
         FROM data
         JOIN users ON data.user_id = users.id
         JOIN questions ON data.question_id = questions.question_id
-        WHERE questions.question_title = 'Menstrual cycle day 1' AND users.id=:user_id;
+        WHERE questions.question_title = 'Menstrual cycle day 1' AND users.id=:user_id AND data.response = 2;
     """
     data = db.session.execute(text(sql), {"user_id": user_id}).fetchall()
     labels = [{"date": row[1].strftime("%Y-%m-%d"), "value": row[0]} for row in data]

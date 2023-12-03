@@ -2,6 +2,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+
 <h1>User Data</h1>
 <p>Choose a question to see the results</p>
 <form action="/user_data" method="POST">
@@ -36,11 +37,13 @@
           backgroundColor: "rgba(0, 0, 255, 0.5)",
         },
         {
+          type: "scatter",
           label: "Day 1 of cycle",
           data: {{ menstrual_data|safe }},
           borderWidth: 1,
           borderColor: "rgb(255, 0, 0)",
           backgroundColor: "rgba(255, 0, 0, 0.5)",
+          pointRadius: 10
         }
       ],
     },
