@@ -9,7 +9,6 @@ CREATE TABLE Users (
   team varchar,
   poll_updated_at date
 );
-
 CREATE TABLE Questions (
   question_id serial PRIMARY KEY,
   question_text text,
@@ -20,7 +19,6 @@ CREATE TABLE Questions (
   question_title text UNIQUE,
   category varchar
 );
-
 CREATE TABLE Data (
   entry_id serial PRIMARY KEY,
   user_id integer REFERENCES Users (id),
@@ -28,7 +26,6 @@ CREATE TABLE Data (
   response integer,
   created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE Tips (
   tip_id serial PRIMARY KEY,
   tip_text text,
@@ -36,7 +33,6 @@ CREATE TABLE Tips (
   target_group varchar,
   priority integer
 );
-
 CREATE TABLE UserTips (
   user_id integer REFERENCES Users (id),
   tip_id integer REFERENCES Tips (tip_id),
@@ -44,5 +40,3 @@ CREATE TABLE UserTips (
   shown_count integer DEFAULT 0,
   PRIMARY KEY (user_id, tip_id)
 );
-
-
