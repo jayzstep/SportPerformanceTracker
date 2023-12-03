@@ -20,7 +20,6 @@ def get_single_data(question_id, user_id):
         text(sql), {"question_id": question_id, "user_id": user_id}
     ).fetchall()
     labels = [{"date": row[1].strftime("%Y-%m-%d"), "value": row[0]} for row in data]
-    print("labels:", labels)
     return labels
 
 
@@ -28,13 +27,12 @@ def get_menstrual_data(user_id):
     sql = """
         SELECT data.response, data.created_at
         FROM data
-        JOIN users ON data.user_id = users.id
         JOIN questions ON data.question_id = questions.question_id
-        WHERE questions.question_title = 'Menstrual cycle day 1' AND users.id=:user_id AND data.response = 2;
+        WHERE questions.question_title = 'Menstrual cycle day 1' AND data.user_id=:user_id AND data.response = 2;
     """
+
     data = db.session.execute(text(sql), {"user_id": user_id}).fetchall()
     labels = [{"date": row[1].strftime("%Y-%m-%d"), "value": row[0]} for row in data]
-    print("labels:", labels)
     return labels
 
 
@@ -92,3 +90,37 @@ def check_poll_updated(user_id):
         return True
     else:
         return False
+
+
+# testing
+
+
+def get_sleep_average(user_id):
+    sql = "SELECT ROUND(AVG(response), 1) FROM data WHERE user_id=:user_id AND question_id=4"
+    return db.session.execute(text(sql), {"user_id": user_id}).fetchone()[0]
+
+
+def get_category_averages(user_id):
+    sql = """
+        SELECT ROUND(AVG(response), 1), FROM data JOIN questions ON data.question_id = questions.question_id WHERE data.user_id=:user_id GROUP BY questions.category"""
+    return db.session.execute(text(sql), {"user_id": user_id}).fetchall()
+
+
+def add_usertip(user_id, tip_id):
+    try:
+        db.session.execute(
+            text("INSERT INTO usertips (user_id, tip_id) VALUES (:user_id, :tip_id)"),
+            {
+                "user_id": user_id,
+                "tip_id": tip_id,
+            },
+        )
+        db.session.commit()
+    except:
+        print("Usertip already exists")
+    return
+
+
+def get_usertips(user_id):
+    sql = "SELECT tip_text FROM tips JOIN usertips ON tips.tip_id = usertips.tip_id WHERE usertips.user_id=:user_id"
+    return db.session.execute(text(sql), {"user_id": user_id}).fetchall()

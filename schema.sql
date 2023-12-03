@@ -7,7 +7,6 @@ CREATE TABLE Users (
   full_name varchar,
   sport varchar,
   team varchar,
-  last_menstrual_date date,
   poll_updated_at date
 );
 
@@ -18,7 +17,8 @@ CREATE TABLE Questions (
   radio_low text,
   radio_high text,
   radio_scale integer,
-  question_title text UNIQUE
+  question_title text UNIQUE,
+  category varchar
 );
 
 CREATE TABLE Data (
@@ -28,3 +28,21 @@ CREATE TABLE Data (
   response integer,
   created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE Tips (
+  tip_id serial PRIMARY KEY,
+  tip_text text,
+  category varchar,
+  target_group varchar,
+  priority integer
+);
+
+CREATE TABLE UserTips (
+  user_id integer REFERENCES Users (id),
+  tip_id integer REFERENCES Tips (tip_id),
+  last_shown timestamp,
+  shown_count integer DEFAULT 0,
+  PRIMARY KEY (user_id, tip_id)
+);
+
+

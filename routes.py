@@ -7,6 +7,15 @@ import users
 import poll_helper
 
 
+@app.route("/testi")
+def testi():
+    sleep_average = poll_helper.get_sleep_average(1)
+    # if sleep_average < 5:
+    #     poll_helper.add_usertip(1, 2) #! kannattaa olla ehkä try except
+    tips = poll_helper.get_usertips(1)
+    return render_template("testi.html", sleep_average=sleep_average, tips=tips)
+
+
 @app.route("/")
 def index():
     if "user_id" not in session:
