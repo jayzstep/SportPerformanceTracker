@@ -33,8 +33,7 @@ def user_data():
     chart_data = []
     menstrual_data = []
     questions = poll_helper.get_questions_for_menu()
-    category_averages = poll_helper.get_category_averages(1)
-    tips = poll_helper.get_usertips(session["user_id"])
+    tips = [tip[0] for tip in poll_helper.get_usertips(session["user_id"])]
 
     if request.method == "POST":
         question_id = request.form["question_id"]
@@ -52,7 +51,6 @@ def user_data():
         title=title,
         questions=questions,
         radio_scale=radio_scale,
-        averages=category_averages,
         tips=tips,
     )
 

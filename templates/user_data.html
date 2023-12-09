@@ -4,6 +4,12 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
 
 <h1>User Data</h1>
+
+{% if tips %}
+<h2>Tip of the day</h2>
+<p>{{ tips|random }}</p>
+<hr />
+{% endif %}
 <p>Choose a question to see the results</p>
 <form action="/user_data" method="POST">
   <select name="question_id">
