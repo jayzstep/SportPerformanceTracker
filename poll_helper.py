@@ -58,6 +58,27 @@ def get_all_data(user_id):
     return db.session.execute(text(sql), {"user_id": user_id}).fetchall()
 
 
+def get_usertips(user_id):
+    sql = "SELECT tip_text FROM tips JOIN usertips ON tips.tip_id = usertips.tip_id WHERE usertips.user_id=:user_id"
+    return db.session.execute(text(sql), {"user_id": user_id}).fetchall()
+
+
+def get_category_averages(user_id):
+    sql = """
+        SELECT questions.category, ROUND(AVG(response), 1) 
+        FROM data 
+        JOIN questions ON data.question_id = questions.question_id 
+        WHERE data.user_id=:user_id 
+        AND created_at > (SELECT MAX(created_at) FROM data WHERE user_id=:user_id) - INTERVAL '7 days' 
+        GROUP BY questions.category
+    """
+    result = db.session.execute(text(sql), {"user_id": user_id}).fetchall()
+
+    averages = [(category, float(avg)) for category, avg in result]
+
+    return averages
+
+
 # add data
 
 
@@ -81,6 +102,28 @@ def add_data(question_id, user_id, response):
     return
 
 
+def add_usertip(user_id, category):
+    try:
+        sql = (
+            "SELECT tip_id FROM tips WHERE category=:category ORDER BY RANDOM() LIMIT 1"
+        )
+        tip_id = db.session.execute(text(sql), {"category": category}).fetchone()[0]
+    except:
+        print("No tips found in category")
+    try:
+        db.session.execute(
+            text("INSERT INTO usertips (user_id, tip_id) VALUES (:user_id, :tip_id)"),
+            {
+                "user_id": user_id,
+                "tip_id": tip_id,
+            },
+        )
+        db.session.commit()
+    except:
+        print("Usertip already exists")  #! change to pass?
+    return
+
+
 # checks
 
 
@@ -96,50 +139,13 @@ def check_poll_updated(user_id):
 # testing new stuff
 
 
-def get_sleep_average(user_id):
-    sql = "SELECT ROUND(AVG(response), 1) FROM data WHERE user_id=:user_id AND question_id=4"
-    return db.session.execute(text(sql), {"user_id": user_id}).fetchone()[0]
-
-
-def get_category_averages(user_id):
-    sql = """
-        SELECT questions.category, ROUND(AVG(response), 1) 
-        FROM data 
-        JOIN questions ON data.question_id = questions.question_id 
-        WHERE data.user_id=:user_id 
-        GROUP BY questions.category"""
-    result = db.session.execute(text(sql), {"user_id": user_id}).fetchall()
-
-    averages = [(category, float(avg)) for category, avg in result]
-
-    return averages
-
-
+#! remove?
 def get_tip_ids(category):
     sql = "SELECT tip_id FROM tips WHERE category=:category"
     return db.session.execute(text(sql), {"category": category}).fetchall()
 
 
-def add_usertip(user_id, tip_id):
-    try:
-        db.session.execute(
-            text("INSERT INTO usertips (user_id, tip_id) VALUES (:user_id, :tip_id)"),
-            {
-                "user_id": user_id,
-                "tip_id": tip_id,
-            },
-        )
-        db.session.commit()
-    except:
-        print("Usertip already exists")
-    return
-
-
-def get_usertips(user_id):
-    sql = "SELECT tip_text FROM tips JOIN usertips ON tips.tip_id = usertips.tip_id WHERE usertips.user_id=:user_id"
-    return db.session.execute(text(sql), {"user_id": user_id}).fetchall()
-
-
+#! remove
 def get_all_tips():
     sql = "SELECT tip_text FROM tips"
     return db.session.execute(text(sql)).fetchall()

@@ -12,7 +12,7 @@ def testi():
     if "user_id" not in session:
         return redirect("/")
     category_averages = poll_helper.get_category_averages(1)
-    tips = poll_helper.get_all_tips()
+    tips = poll_helper.get_usertips(session["user_id"])
     return render_template("testi.html", averages=category_averages, tips=tips)
 
 
@@ -33,6 +33,9 @@ def user_data():
     chart_data = []
     menstrual_data = []
     questions = poll_helper.get_questions_for_menu()
+    category_averages = poll_helper.get_category_averages(1)
+    tips = poll_helper.get_usertips(session["user_id"])
+
     if request.method == "POST":
         question_id = request.form["question_id"]
         chart_data = poll_helper.get_single_data(question_id, session["user_id"])
@@ -49,6 +52,8 @@ def user_data():
         title=title,
         questions=questions,
         radio_scale=radio_scale,
+        averages=category_averages,
+        tips=tips,
     )
 
 
@@ -72,6 +77,14 @@ def result():
 
     for question_id, response_value in form_data.items():
         poll_helper.add_data(question_id, session["user_id"], response_value)
+
+    averages = poll_helper.get_category_averages(session["user_id"])
+
+    for category, average in averages:
+        if not category:
+            continue
+        if average < 3:
+            poll_helper.add_usertip(session["user_id"], category)
     return redirect("/")
 
 

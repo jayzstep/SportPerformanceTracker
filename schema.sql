@@ -29,9 +29,7 @@ CREATE TABLE Data (
 CREATE TABLE Tips (
   tip_id serial PRIMARY KEY,
   tip_text text,
-  category varchar,
-  target_group varchar,
-  priority integer
+  category varchar
 );
 CREATE TABLE UserTips (
   user_id integer REFERENCES Users (id),
