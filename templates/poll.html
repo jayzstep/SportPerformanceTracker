@@ -3,24 +3,27 @@
 <h1>Poll</h1>
 <p>Welcome to the poll</p>
 <hr />
-<form action="/result" method="POST">
-  {% for question in questions %} {% if question.question_type == "radio" %}
-  <p>{{ question.question_text }}</p>
-  <p>
-    {{ question.radio_low }} {% for i in range(question.radio_scale) %}
-    <input
-      type="radio"
-      name="{{ question.question_id }}"
-      value="{{ i + 1 }}"
-      required
-    />{{ i + 1 }} {% endfor %} {{ question.radio_high }}
-  </p>
-  {% elif question.question_type == "text" %}
-  <p>{{ question.question_text }}</p>
-  <input type="text" name="{{ question.question_id }}" />
-  {% endif %} {% endfor %}
-  <input type="submit" value="Submit" />
-  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-</form>
-<hr />
+<div class="poll">
+  <form action="/result" method="POST">
+    {% for question in questions %} {% if question.question_type == "radio" %}
+    <p>{{ question.question_text }}</p>
+    <div>
+      <span>{{ question.radio_low }}</span>
+      {% for i in range(question.radio_scale) %}
+      <label>
+        <input
+          type="radio"
+          name="{{ question.question_id }}"
+          value="{{ i + 1 }}"
+          required
+        />{{ i + 1 }}
+      </label>
+      {% endfor %}
+      <span>{{ question.radio_high }}</span>
+    </div>
+    {% endif %} {% endfor %}
+    <input type="submit" value="Submit" />
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  </form>
+</div>
 {% endblock %}

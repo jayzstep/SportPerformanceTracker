@@ -10,6 +10,12 @@
 <p>{{ tips|random }}</p>
 <hr />
 {% endif %}
+
+{% if not test_data_added %}
+<p>Test data not added</p>
+<hr />
+{% endif %}
+
 <p>Choose a question to see the results</p>
 <form action="/user_data" method="POST">
   <select name="question_id">

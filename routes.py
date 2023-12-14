@@ -34,6 +34,7 @@ def user_data():
     menstrual_data = []
     questions = poll_helper.get_questions_for_menu()
     tips = [tip[0] for tip in poll_helper.get_usertips(session["user_id"])]
+    test_data_added = poll_helper.check_test_data_added(session["user_id"])
 
     if request.method == "POST":
         question_id = request.form["question_id"]
@@ -52,6 +53,7 @@ def user_data():
         questions=questions,
         radio_scale=radio_scale,
         tips=tips,
+        test_data_added=test_data_added,
     )
 
 
@@ -81,7 +83,11 @@ def result():
     for category, average in averages:
         if not category:
             continue
-        if average < 3:
+        if category not in ["health", "recovery"] and average < 3:
+            poll_helper.add_usertip(session["user_id"], category)
+        if category == "health" and average > 1:
+            poll_helper.add_usertip(session["user_id"], category)
+        if category == "recovery" and average > 3:
             poll_helper.add_usertip(session["user_id"], category)
     return redirect("/")
 

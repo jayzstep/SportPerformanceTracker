@@ -130,10 +130,13 @@ def add_usertip(user_id, category):
 def check_poll_updated(user_id):
     sql = "SELECT poll_updated_at FROM users WHERE id=:user_id"
     date_updated = db.session.execute(text(sql), {"user_id": user_id}).fetchone()[0]
-    if date_updated == date.today():
-        return True
-    else:
-        return False
+    return date_updated == date.today()
+
+
+def check_test_data_added(user_id):
+    sql = "SELECT test_data_added FROM users WHERE id=:user_id"
+    test_data_added = db.session.execute(text(sql), {"user_id": user_id}).fetchone()[0]
+    return test_data_added
 
 
 # testing new stuff
@@ -213,8 +216,34 @@ VALUES
   (:user_id, 7, 3, '2023-12-01 12:00:00'),
   (:user_id, 8, 2, '2023-12-01 12:00:00'),
   (:user_id, 9, 1, '2023-12-01 12:00:00'),
-  (:user_id, 10, 2,'2023-12-01 12:00:00');
+  (:user_id, 10, 2,'2023-12-01 12:00:00'),
+  (:user_id, 1, 3, '2023-12-04 12:00:00'),
+  (:user_id, 2, 3, '2023-12-04 12:00:00'),
+  (:user_id, 3, 4, '2023-12-04 12:00:00'),
+  (:user_id, 4, 4, '2023-12-04 12:00:00'),
+  (:user_id, 5, 4, '2023-12-04 12:00:00'),
+  (:user_id, 6, 3, '2023-12-04 12:00:00'),
+  (:user_id, 7, 2, '2023-12-04 12:00:00'),
+  (:user_id, 8, 4, '2023-12-04 12:00:00'),
+  (:user_id, 9, 1, '2023-12-04 12:00:00'),
+  (:user_id, 10, 1,'2023-12-04 12:00:00'),
+  (:user_id, 1, 2, '2023-12-07 12:00:00'),
+  (:user_id, 2, 3, '2023-12-07 12:00:00'),
+  (:user_id, 3, 2, '2023-12-07 12:00:00'),
+  (:user_id, 4, 3, '2023-12-07 12:00:00'),
+  (:user_id, 5, 4, '2023-12-07 12:00:00'),
+  (:user_id, 6, 2, '2023-12-07 12:00:00'),
+  (:user_id, 7, 4, '2023-12-07 12:00:00'),
+  (:user_id, 8, 5, '2023-12-07 12:00:00'),
+  (:user_id, 9, 1, '2023-12-07 12:00:00'),
+  (:user_id, 10, 1,'2023-12-07 12:00:00');
 """
     db.session.execute(text(sql), {"user_id": user_id})
+
+    db.session.execute(
+        text("UPDATE users SET test_data_added = TRUE WHERE id = :user_id"),
+        {"user_id": user_id},
+    )
+
     db.session.commit()
     return

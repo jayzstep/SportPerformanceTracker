@@ -1,20 +1,26 @@
 <!DOCTYPE html>
-<!-- <link rel="stylesheet" href="/static/main.css" /> -->
+<link rel="preconnect" href="https://fonts.googleapis.com"> 
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/main.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SportPerformanceTracker</title>
-<h1>
-  SportPerformanceTracker</h1>
-  <hr />
-  {% if 'user_id' in session %}
+{% if 'user_id' in session %}
+<strong><nav>
   <p>You are logged in as {{session.username}}</p>
-      <strong><nav>
-        <ul class="menu">
-          <li><a href="{{ url_for('poll') }}">Poll</a></li>
-          <li><a href="{{ url_for('user_data') }}">User Data</a></li>
-          <li><a href="{{ url_for('testi') }}">Test page</a> (shows data that is not yet implemented)</li>
-          <li><a href="{{ url_for('logout') }}">Logout</a></li>
-        </ul>
-      </nav></strong>
-  {% endif %}
-  {% block content %}{% endblock %}
-</h1>
+  <ul class="menu">
+    <li><a href="{{ url_for('poll') }}">Poll</a></li>
+    <li><a href="{{ url_for('user_data') }}">User Data</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      </ul>
+    </nav></strong>
+{% endif %}
+<title>SportPerformanceTracker</title>
+<div class="header">
+  <h1>
+    Sport Performance Tracker</h1>
+  </div>
+  <div class="content">
+
+    {% block content %}{% endblock %}
+  </div>
+  </h1>

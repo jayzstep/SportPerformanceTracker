@@ -1,0 +1,106 @@
+* {
+  margin: 0;
+}
+
+body {
+  margin: auto;
+  max-width: 45em;
+  font-family: "Oswald", "Arial", sans-serif;
+  font-size: 1.2em;
+  line-height: 1.5;
+  color: rgb(23, 23, 23);
+  background-image: linear-gradient(to right, #ffb7c5, #b1beff);
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+nav li {
+  display: inline-block;
+  padding: 0 0.5em;
+}
+
+.header {
+  text-align: center;
+  font-family: "Bebas Neue", "Arial", sans-serif;
+  font-weight: bold;
+  font-size: 2em;
+  font-weight: bold;
+  background-image: radial-gradient(#3d57d9, #f713d1);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.content {
+  padding: 1em;
+  background-image: linear-gradient(to right, #ece5f5, #e3ddf1);
+  border-radius: 0.5em;
+}
+
+.poll {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.poll p {
+  margin: 0;
+  padding: 0.5em;
+  font-weight: 100;
+}
+
+.login {
+  display: grid;
+  max-width: 10em;
+  grid-template-columns: 1fr;
+  margin: 1em auto;
+  width: 80%;
+}
+
+.login span {
+  font-size: 0.5em;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+form input[type="radio"] {
+  margin-right: 0.5em;
+}
+
+form div {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1em;
+}
+
+form div label {
+  display: flex;
+  align-items: center;
+}
+
+form span {
+  margin-left: 0.5em;
+}
+
+form input[type="submit"] {
+  display: block;
+  margin-top: 1em;
+  padding: 0.5em 1em;
+  color: rgb(23, 23, 23);
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+form input[type="submit"]:hover {
+  background-color: #f713d1;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.4);
+}

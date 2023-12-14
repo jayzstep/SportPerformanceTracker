@@ -7,7 +7,8 @@ CREATE TABLE Users (
   full_name varchar,
   sport varchar,
   team varchar,
-  poll_updated_at date
+  poll_updated_at date,
+  test_data_added boolean DEFAULT false
 );
 CREATE TABLE Questions (
   question_id serial PRIMARY KEY,

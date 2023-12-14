@@ -1,10 +1,25 @@
 {% extends "layout.html" %} {% block content %}
-<form action="/login" method="POST">
-  <p>Username</p>
-  <input type="text" name="username" />
-  <p>Password</p>
-  <input type="password" name="password" />
+<h1>Welcome</h1>
+<p>
+  SportPerformanceTracker is a web app designed to explore the impact of
+  menstrual cycles on athletic performance through daily surveys, enabling
+  female athletes to log their physical and emotional state while providing
+  users and the administrators with a comprehensive data dashboard for in-depth
+  analysis and performance correlation.
+</p>
+<p>
+  This is a small scale "proof of concept" -type version. Making the addition of
+  new survey dimensions straightforward is key for enhanced future research and
+  insights.
+</p>
+<form class="login" action="/login" method="POST">
+  <label for="username">Username</label>
+  <input type="text" id="username" name="username" />
+  <label for="password">Password</label>
+  <input type="password" id="password" name="password" />
   <input type="submit" value="Login" />
-  <a href="/register">Register</a>
 </form>
+<div style="text-align: center">
+  <a href="/register">Register</a>
+</div>
 {% endblock %}
