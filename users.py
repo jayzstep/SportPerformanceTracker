@@ -31,15 +31,22 @@ def logout():
     del session["csrf_token"]
 
 
-def add_new_user(username, password, role):
+def add_new_user(username, password, role, full_name, sport, team):
     salt = bcrypt.gensalt()
     hash_value = bcrypt.hashpw(password.encode(), salt)
     try:
         db.session.execute(
             text(
-                "INSERT INTO users (username, password, admin) VALUES (:username, :password, :admin)"
+                "INSERT INTO users (username, password, admin, full_name, sport, team) VALUES (:username, :password, :admin, :full_name, :sport, :team)"
             ),
-            {"username": username, "password": hash_value.decode(), "admin": role},
+            {
+                "username": username,
+                "password": hash_value.decode(),
+                "admin": role,
+                "full_name": full_name,
+                "sport": sport,
+                "team": team,
+            },
         )
 
         db.session.commit()

@@ -8,10 +8,11 @@
 <strong><nav>
   <p>You are logged in as {{session.username}}</p>
   <ul class="menu">
+    <li><a href="{{ url_for('index') }}">Home</a></li>
     <li><a href="{{ url_for('poll') }}">Poll</a></li>
     <li><a href="{{ url_for('user_data') }}">User Data</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
-      </ul>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+  </ul>
     </nav></strong>
 {% endif %}
 <title>SportPerformanceTracker</title>

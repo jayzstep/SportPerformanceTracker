@@ -16,17 +16,22 @@ def testi():
     return render_template("testi.html", averages=category_averages, tips=tips)
 
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def index():
     if "user_id" not in session:
         return redirect("/login")
-    return render_template("index.html")
+    test_data_added = poll_helper.check_test_data_added(session["user_id"])
+    name = poll_helper.get_first_name(session["user_id"])
+    if request.method == "POST":
+        poll_helper.add_mock_data(session["user_id"])
+        test_data_added = True
+    return render_template("index.html", test_data_added=test_data_added, name=name)
 
 
 @app.route("/user_data", methods=["POST", "GET"])
 def user_data():
     if "user_id" not in session:
-        return redirect("/")
+        return redirect("/login")
 
     title = ""
     radio_scale = 1
@@ -89,7 +94,12 @@ def result():
             poll_helper.add_usertip(session["user_id"], category)
         if category == "recovery" and average > 3:
             poll_helper.add_usertip(session["user_id"], category)
-    return redirect("/")
+    return redirect("/success")
+
+
+@app.route("/success")
+def success():
+    return render_template("success.html")
 
 
 @app.route("/login", methods=["POST", "GET"])
@@ -115,9 +125,12 @@ def new_user():
     username = request.form["username"]
     password = request.form["password"]
     password2 = request.form["confirm_password"]
+    full_name = request.form["full_name"]
+    sport = request.form["sport"]
+    team = request.form["team"]
     if password != password2:
         return render_template("error.html", message="Passwords do not match")
-    users.add_new_user(username, password, False)
+    users.add_new_user(username, password, False, full_name, sport, team)
     return redirect("/")
 
 

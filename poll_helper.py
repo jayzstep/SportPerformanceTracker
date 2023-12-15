@@ -15,8 +15,13 @@ def get_poll():
 # get user data
 
 
+def get_first_name(user_id):
+    sql = "SELECT SPLIT_PART(full_name, ' ', 1) AS first_name FROM users WHERE id=:user_id"
+    return db.session.execute(text(sql), {"user_id": user_id}).fetchone()[0]
+
+
 def get_single_data(question_id, user_id):
-    sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id"
+    sql = "SELECT response, created_at FROM data WHERE question_id=:question_id AND user_id=:user_id ORDER BY created_at ASC"
     data = db.session.execute(
         text(sql), {"question_id": question_id, "user_id": user_id}
     ).fetchall()
@@ -246,4 +251,5 @@ VALUES
     )
 
     db.session.commit()
+    print("Mock data added")
     return
