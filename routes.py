@@ -125,9 +125,17 @@ def new_user():
     full_name = request.form["full_name"]
     sport = request.form["sport"]
     team = request.form["team"]
+    if len(password) < 8:
+        return render_template(
+            "error.html", message="Password must be at least 8 characters long"
+        )
     if password != password2:
         return render_template("error.html", message="Passwords do not match")
-    users.add_new_user(username, password, False, full_name, sport, team)
+    if not users.add_new_user(username, password, False, full_name, sport, team):
+        return render_template(
+            "error.html",
+            message="Username already in use, or team/sport name too long. Please check your inputs and try again.",
+        )
     return redirect("/")
 
 

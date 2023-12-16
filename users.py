@@ -50,9 +50,7 @@ def add_new_user(username, password, role, full_name, sport, team):
         )
 
         db.session.commit()
-        print("New user added successfully")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    except:
         return False
     return login(username, password)
 

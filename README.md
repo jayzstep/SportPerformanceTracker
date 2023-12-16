@@ -1,6 +1,6 @@
 # SportPerformanceTracker
 
-A web app designed to explore the impact of menstrual cycles on athletic performance through daily surveys, enabling female athletes to log their physical and emotional state while providing users and the administrators with a comprehensive data dashboard for in-depth analysis and performance correlation.
+A web app designed to explore the impact of menstrual cycles on athletic performance through daily surveys, enabling female athletes to log their physical and emotional state while providing users with a comprehensive data dashboard for in-depth analysis and performance correlation.
 This is a small scale "proof of concept" -type version. Making the addition of new survey dimensions straightforward is key for enhanced future research and insights.
 
 # For the peer reviewer 3.12.2023

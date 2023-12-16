@@ -4,12 +4,13 @@ CREATE TABLE Users (
   password varchar(128),
   admin boolean,
   created_at timestamp DEFAULT CURRENT_TIMESTAMP,
-  full_name varchar,
-  sport varchar,
-  team varchar,
+  full_name varchar(50),
+  sport varchar(50),
+  team varchar(50),
   poll_updated_at date,
   test_data_added boolean DEFAULT false
 );
+
 CREATE TABLE Questions (
   question_id serial PRIMARY KEY,
   question_text text,
@@ -20,6 +21,7 @@ CREATE TABLE Questions (
   question_title text UNIQUE,
   category varchar
 );
+
 CREATE TABLE Data (
   entry_id serial PRIMARY KEY,
   user_id integer REFERENCES Users (id),
@@ -27,11 +29,13 @@ CREATE TABLE Data (
   response integer,
   created_at timestamp DEFAULT CURRENT_TIMESTAMP
 );
+
 CREATE TABLE Tips (
   tip_id serial PRIMARY KEY,
   tip_text text,
   category varchar
 );
+
 CREATE TABLE UserTips (
   user_id integer REFERENCES Users (id),
   tip_id integer REFERENCES Tips (tip_id),
@@ -39,3 +43,5 @@ CREATE TABLE UserTips (
   shown_count integer DEFAULT 0,
   PRIMARY KEY (user_id, tip_id)
 );
+
+SELECT 1;
