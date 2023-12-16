@@ -12,6 +12,9 @@ body {
   background-image: linear-gradient(to right, #ffb7c5, #b1beff);
 }
 
+hr {
+  margin: 1em 0;
+}
 nav {
   display: flex;
   justify-content: space-between;
@@ -27,11 +30,17 @@ nav li {
   font-family: "Bebas Neue", "Arial", sans-serif;
   font-weight: bold;
   font-size: 2em;
-  font-weight: bold;
   background-image: radial-gradient(#3d57d9, #f713d1);
   color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
+}
+
+q {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+  font-family: cursive;
 }
 
 .content {
@@ -69,10 +78,6 @@ form label {
   margin-bottom: 0.5em;
 }
 
-form input[type="radio"] {
-  margin-right: 0.5em;
-}
-
 form div {
   display: flex;
   justify-content: space-evenly;
@@ -88,14 +93,18 @@ form span {
   margin-left: 0.5em;
 }
 
+form input[type="radio"] {
+  margin-right: 0.5em;
+}
+
 form input[type="submit"] {
   display: block;
+  margin: auto;
   margin-top: 1em;
   padding: 0.5em 1em;
   color: rgb(23, 23, 23);
   border: none;
   border-radius: 0.5em;
-  cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }

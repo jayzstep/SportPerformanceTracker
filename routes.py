@@ -7,25 +7,22 @@ import users
 import poll_helper
 
 
-@app.route("/testi")
-def testi():
-    if "user_id" not in session:
-        return redirect("/")
-    category_averages = poll_helper.get_category_averages(1)
-    tips = poll_helper.get_usertips(session["user_id"])
-    return render_template("testi.html", averages=category_averages, tips=tips)
-
-
 @app.route("/", methods=["POST", "GET"])
 def index():
     if "user_id" not in session:
         return redirect("/login")
     test_data_added = poll_helper.check_test_data_added(session["user_id"])
+    poll_updated = poll_helper.check_poll_updated(session["user_id"])
     name = poll_helper.get_first_name(session["user_id"])
     if request.method == "POST":
         poll_helper.add_mock_data(session["user_id"])
         test_data_added = True
-    return render_template("index.html", test_data_added=test_data_added, name=name)
+    return render_template(
+        "index.html",
+        test_data_added=test_data_added,
+        name=name,
+        poll_updated=poll_updated,
+    )
 
 
 @app.route("/user_data", methods=["POST", "GET"])

@@ -1,7 +1,19 @@
 {% extends "layout.html" %} {% block content %}
 <h1>Welcome {{ name }}</h1>
 {% if not test_data_added %}
+<p>
+  Dear tester! Please click the button below to input test data into the
+  database. This will greatly enhance the visual appeal of the charts.
+</p>
 <form action="/" method="POST">
   <input type="submit" value="Add test data" />
 </form>
+{% endif %} {% if not poll_updated %}
+<p>
+  Please click <a href="{{ url_for('poll') }}">here</a> to input your answers
+  for today.
+</p>
+{% else %}
+<p>Click <a href="{{ url_for('user_data') }}">here</a> to see your data.</p>
+
 {% endif %} {% endblock %}

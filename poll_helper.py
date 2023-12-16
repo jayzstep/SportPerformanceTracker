@@ -1,10 +1,9 @@
 from db import db
 from sqlalchemy import text
 from datetime import date
-from decimal import Decimal  #! remove
 
 
-# poll
+# Poll
 
 
 def get_poll():
@@ -12,7 +11,7 @@ def get_poll():
     return db.session.execute(text(sql)).fetchall()
 
 
-# get user data
+# Get User Data
 
 
 def get_first_name(user_id):
@@ -84,7 +83,7 @@ def get_category_averages(user_id):
     return averages
 
 
-# add data
+# Add Data
 
 
 def add_data(question_id, user_id, response):
@@ -125,11 +124,11 @@ def add_usertip(user_id, category):
         )
         db.session.commit()
     except:
-        print("Usertip already exists")  #! change to pass?
+        print("Usertip already exists")
     return
 
 
-# checks
+# Checks
 
 
 def check_poll_updated(user_id):
@@ -144,19 +143,7 @@ def check_test_data_added(user_id):
     return test_data_added
 
 
-# testing new stuff
-
-
-#! remove?
-def get_tip_ids(category):
-    sql = "SELECT tip_id FROM tips WHERE category=:category"
-    return db.session.execute(text(sql), {"category": category}).fetchall()
-
-
-#! remove
-def get_all_tips():
-    sql = "SELECT tip_text FROM tips"
-    return db.session.execute(text(sql)).fetchall()
+# Mock Data
 
 
 def add_mock_data(user_id):
@@ -253,3 +240,18 @@ VALUES
     db.session.commit()
     print("Mock data added")
     return
+
+
+#! Testing
+
+
+#! remove?
+def get_tip_ids(category):
+    sql = "SELECT tip_id FROM tips WHERE category=:category"
+    return db.session.execute(text(sql), {"category": category}).fetchall()
+
+
+#! remove?
+def get_all_tips():
+    sql = "SELECT tip_text FROM tips"
+    return db.session.execute(text(sql)).fetchall()

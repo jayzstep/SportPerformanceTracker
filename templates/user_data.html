@@ -6,8 +6,8 @@
 <h1>User Data</h1>
 
 {% if tips %}
-<h2>Tip of the day</h2>
-<p>{{ tips|random }}</p>
+<h2>Tip of the day:</h2>
+<q>{{ tips|random }}</q>
 <hr />
 {% endif %}
 
@@ -18,15 +18,22 @@
 
 <p>Choose a category to see the results</p>
 <form action="/user_data" method="POST">
-  <select name="question_id">
+  <select id="dropdown" name="question_id">
+    <option value="" disabled selected>Select</option>
   {% for question in questions %}
     <option value="{{ question.question_id }}">{{ question.question_title }}</option>
   {% endfor %}
   </select>
-  <input type="submit" value="Show" />
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
 </form>
 <hr />
+
+<script>
+  const dropdown = document.getElementById("dropdown");
+  dropdown.addEventListener("change", (event) => {
+    event.target.form.submit();
+  });
+</script>
   
 {% if chart_data %}
 <h2>{{ title }}</h2>
@@ -88,8 +95,6 @@
 </script>
 
 {% endif %}
-
-<a href="/">Back</a>
 </body>
 </html>
 {% endblock %}
