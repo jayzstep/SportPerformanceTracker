@@ -13,11 +13,6 @@ Users can create an account and participate in the daily poll to input their dat
 
 Looking forward, I'm considering expanding the scope of this project. By adding more depth to the daily poll, one could potentially collect valuable scientific data on the relationship between the menstrual cycle and athletic performance. This could pave the way for more nuanced advice and insights, backed by thorough data analysis.
 
-### Known Issues
-
-- When creating a new account, if the passwords don't match or the username is already in use, the app displays an error message. However, the form needs to be navigated back to and all fields are emptied, which is BAD UI design.
-- The UI looks disgusting.
-
 ## For the peer reviewer 3.12.2023
 
 Over the past two weeks, the primary focus has been on establishing the core functionalities of the app. In response to feedback from the previous peer review, I have made several improvements and have successfully integrated Chart.js. This has enhanced the app's capability to display user data, including an overlay of their menstrual cycle.
