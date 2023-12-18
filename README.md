@@ -63,6 +63,12 @@ pip install -r requirements.txt
 psql < schema.sql
 ```
 
+add mockdata if you like(recommended)
+
+```bash
+psql < mockdata.sql
+```
+
 5. Finally, run the app:
 
 ```bash
